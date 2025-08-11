@@ -15,10 +15,10 @@ data
 │   ├── citibike_cleaned.csv
 │   └── weather_cleaned.csv
 ├── raw
-│   ├── JC-201601-citibike-tripdata.csv
+│   ├── JC-201601-citibike-tripdata.csv                # Raw citibike data (12 files)
 │   ├── ...
 |   ├── JC-201612-citibike-tripdata.csv
-│   └── newark_airport_2016.csv
+│   └── newark_airport_2016.csv                        # Raw weather data
 ├── notebooks
     ├── codecademy_citibike_final.ipynb                # Data cleaning and transformation
     └── codecademy_citibike_database_and_views.ipynb   # Database creation and SQL views
