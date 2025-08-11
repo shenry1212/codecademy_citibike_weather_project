@@ -1,0 +1,82 @@
+# Citibike Data Engineering & Analysis Project
+
+## Overview
+This project ingests, cleans, and stores CitiBike trip and weather data in a relational SQLite database, then creates analytical views to support exploratory data analysis. It was completed in Google Colab as part of the Codecademy Data Engineer Career Path.
+
+## Objectives
+1. **Data Cleaning** – Prepare cleaned CitiBike trip and NYC weather datasets for reliable loading into a database.
+2. **Database Creation** – Design and build a relational SQLite schema with appropriate primary/foreign keys.
+3. **ETL Pipeline** – Implement an Extract–Transform–Load process in Python to populate tables in a reproducible way.
+4. **Analytical Views** – Create SQL views that aggregate, join, and summarize data for analysis.
+
+## Data Sources
+- **Trips** – CitiBike trip-level data with station IDs, timestamps, user demographics, and calculated trip metrics (duration, distance, speed, etc.).
+- **Weather** – NYC weather data including temperature, precipitation, wind speed, and snowfall.
+
+Both datasets were pre-cleaned in a separate step and stored as CSVs in Google Drive.
+
+## Tools & Technologies
+- **Python** – `pandas`, `numpy`, `sqlalchemy`
+- **SQLite** – Local relational database
+- **Google Colab** – Development environment
+- **SQL** – Table schema definitions, view creation
+
+## Process
+
+### 1. Mount Google Drive and Load Data
+Cleaned CSVs are read into `pandas` DataFrames with appropriate parsing for dates and times.
+
+### 2. Data Preparation
+- **Stations**: Merged start and end station records, removed blanks, standardized names, and consolidated duplicates by station ID.
+- **Trips**: Selected relevant columns, coerced to correct data types, converted flags to booleans, normalized dates.
+- **Weather**: Filtered to expected schema columns, added missing columns as `NaN`, coerced date field.
+
+### 3. Database Schema
+Three tables:
+- `stations` – Unique station ID, name, latitude, longitude.
+- `trips` – Trip details, foreign keys to start/end stations.
+- `weather` – Daily weather observations.
+
+All tables have primary keys; `trips` enforces foreign key constraints to `stations`.
+
+### 4. Safe Reloads
+On re-run, tables are truncated in dependency order:
+1. `trips` (child table)
+2. `weather` (independent)
+3. `stations` (parent table)
+
+### 5. Data Loading
+DataFrames are inserted into SQLite using `to_sql` with explicit `dtype` mappings, multi-row inserts, and chunking for performance.
+
+### 6. Analytical Views
+Seven SQL views were created:
+1. **`v_daily_ridership`** – Daily ride counts, average duration, and speed.
+2. **`v_hourly_ridership`** – Hourly ride counts by day.
+3. **`v_station_daily_ridership`** – Station-level daily starts and ends.
+4. **`v_daily_ridership_weather`** – Daily ridership joined with weather metrics.
+5. **`v_weather_effects`** – Ridership grouped into precip/dry buckets.
+6. **`v_top_stations`** – Total station activity (starts + ends).
+7. **`v_commute_profile`** – Weekday commute patterns, rush vs. non-rush hours.
+
+Each view is query-ready for analysis or dashboarding.
+
+## Example Output
+When run, the notebook:
+- Prints row counts for all three base tables.
+- Displays the first 10 rows of each view for quick inspection.
+
+## File Structure
+codecademy_citibike_final.py # Data cleaning and preparation
+codecademy_citibike_database_and_views.py # Database creation, data loading, and view definitions
+citibike_cleaned.csv # Cleaned trip data (Google Drive)
+weather_cleaned.csv # Cleaned weather data (Google Drive)
+
+## Next Steps
+- Add indexes on high-usage columns (`start_station_id`, `end_station_id`, `start_date`) to improve query performance.
+- Integrate with a BI tool (e.g., Tableau, Power BI) for visualization.
+- Extend weather analysis to seasonal patterns.
+
+---
+
+**Author:** *Shaun Henry*  
+**Course:** Codecademy Data Engineer Career Path
