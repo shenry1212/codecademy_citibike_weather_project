@@ -9,66 +9,60 @@ It combines Citibike trip data and Newark Airport weather data for 2016, perform
 ---
 
 ## 📂 Folder Structure
-├── data
-│ ├── processed
-│ │ ├── citibike_cleaned.csv
-│ │ └── weather_cleaned.csv
-│ └── raw
-│ ├── JC-201601-citibike-tripdata.csv
-│ ├── JC-201602-citibike-tripdata.csv
-│ ├── ...
-│ └── newark_airport_2016.csv
-│
+```
+data
+├── processed
+│   ├── citibike_cleaned.csv
+│   └── weather_cleaned.csv
+├── raw
+│   ├── JC-201601-citibike-tripdata.csv
+│   ├── ...
+|   ├── JC-201612-citibike-tripdata.csv
+│   └── newark_airport_2016.csv
 ├── notebooks
-│ ├── codecademy_citibike_final.ipynb # Data cleaning and transformation
-│ └── codecademy_citibike_database_and_views.ipynb # Database creation and SQL views
-│
+    ├── codecademy_citibike_final.ipynb                # Data cleaning and transformation
+    └── codecademy_citibike_database_and_views.ipynb   # Database creation and SQL views
 ├── src
-│ ├── codecademy_citibike_final.py # Python script for cleaning
-│ └── codecademy_citibike_database_and_views.py # Python script for DB + views
-│
-└── README.md # You are here
-
+|   ├── codecademy_citibike_final.py                   # Python script for cleaning
+|   └── codecademy_citibike_database_and_views.py      # Python script for DB + views
+├── README.md                                          # You are here
+└── write_up.md                                        # Detailed explantion of process
+```
 
 ---
 
 ## 🚀 How to Run
 
 ### 1️⃣ Clone the Repository
-```bash
 git clone https://github.com/yourusername/codecademy_citibike_weather_project.git
 cd codecademy_citibike_weather_project
 
-2️⃣ Install Dependencies
+### 2️⃣ Install Dependencies
 Make sure you have Python 3.8+ installed, then run:
-
-bash
-Copy
-Edit
 pip install pandas sqlalchemy matplotlib
 (You may also need Jupyter if you want to run notebooks)
 
-3️⃣ Open in Jupyter Notebook
-bash
-Copy
-Edit
-jupyter notebook
+### 3️⃣ Open in Jupyter Notebook
 Run notebooks/codecademy_citibike_final.ipynb first to clean and prepare data
 
 Then run notebooks/codecademy_citibike_database_and_views.ipynb to create the database and views
 
-🗄 Database Schema
+---
+
+## 🗄 Database Schema
 The database contains three main tables:
 
-stations — station IDs, names, and coordinates
+1. stations — station IDs, names, and coordinates
 
-trips — trip-level data including start/end times, distances, speeds
+2. trips — trip-level data including start/end times, distances, speeds
 
-weather — daily weather metrics from Newark Airport
+3. weather — daily weather metrics from Newark Airport
 
 Primary and foreign keys ensure data integrity between tables.
 
-📊 Created SQL Views
+---
+
+## 📊 Created SQL Views
 1. v_daily_ridership — Daily ride counts and averages
 
 2. v_hourly_ridership — Hourly ride patterns
@@ -83,8 +77,7 @@ Primary and foreign keys ensure data integrity between tables.
 
 7. v_commute_profile — Commuting behavior trends
 
-📄 Project Write-Up
-A detailed explanation of my data cleaning, schema design, and view creation process can be found here:
+---
 
-📜 License
-This project is released under the MIT License.
+## 📝 Project Write‑Up
+A detailed explanation of the cleaning, schema design, and view creation process is included in this repository as write_up.md.
